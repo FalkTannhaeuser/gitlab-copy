@@ -38,6 +38,8 @@ to:
     url: https://gitlab.myotherdomain.com
     token: anothertoken
     project: namespace/project
+	## Optional: Prefix the target issue's title by "pfx "
+	# TargetIssuePrefix: 'pfx'
 
 Options:
 `)

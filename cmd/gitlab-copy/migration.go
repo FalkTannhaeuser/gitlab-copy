@@ -10,7 +10,7 @@ import (
 	"text/template"
 	"time"
 
-	"github.com/xanzy/go-gitlab"
+	gitlab "github.com/xanzy/go-gitlab"
 )
 
 const (
@@ -104,11 +104,15 @@ func (m *migration) migrateIssue(issueID int) error {
 		return fmt.Errorf("target: can't fetch issue: %s", err.Error())
 	}
 	skipIssue := false
+	targetTitle := issue.Title
+	if m.params.To.TargetIssuePrefix != "" {
+		targetTitle = m.params.To.TargetIssuePrefix + " " + issue.Title
+	}
 	for _, t := range tis {
-		if issue.Title == t.Title {
+		if targetTitle == t.Title {
 			// Target issue already exists, let's skip this one
 			skipIssue = true
-			log.Printf("target: issue '%s' already exists, skipping...", issue.Title)
+			log.Printf("target: issue '%s' already exists, skipping...", targetTitle)
 			break
 		}
 	}
@@ -116,7 +120,7 @@ func (m *migration) migrateIssue(issueID int) error {
 		return nil
 	}
 	iopts := &gitlab.CreateIssueOptions{
-		Title:       &issue.Title,
+		Title:       &targetTitle,
 		Description: &issue.Description,
 		Labels:      make([]string, 0),
 	}

@@ -10,7 +10,7 @@ import (
 	"strings"
 
 	"github.com/go-yaml/yaml"
-	"github.com/xanzy/go-gitlab"
+	gitlab "github.com/xanzy/go-gitlab"
 )
 
 const (
@@ -43,6 +43,8 @@ type project struct {
 	LinkToTargetIssue bool `yaml:"linkToTargetIssue"`
 	// Optional caption to use for the link text
 	LinkToTargetIssueText string `yaml:"linkToTargetIssueText"`
+	// Optional prefix for the target issue title
+	TargetIssuePrefix string `yaml:"TargetIssuePrefix"`
 }
 
 // matches checks whether issue is part of p.issues. Always
