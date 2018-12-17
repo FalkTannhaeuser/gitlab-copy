@@ -39,6 +39,7 @@ to:
     token: anothertoken
     project: namespace/project
 	## Optional: Prefix the target issue's title by "pfx "
+	## "pfx" may contain the fields "${Author.Username}", "${Author.Email} " and "${Author.Name}" which will be replaced by the respective information from source repository
 	# TargetIssuePrefix: 'pfx'
 
 Options:

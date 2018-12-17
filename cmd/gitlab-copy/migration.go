@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"sort"
+	"strings"
 	"text/template"
 	"time"
 
@@ -106,7 +107,10 @@ func (m *migration) migrateIssue(issueID int) error {
 	skipIssue := false
 	targetTitle := issue.Title
 	if m.params.To.TargetIssuePrefix != "" {
-		targetTitle = m.params.To.TargetIssuePrefix + " " + issue.Title
+		rpl := strings.NewReplacer("${Author.Username}", issue.Author.Username,
+			"${Author.Email}", issue.Author.Email,
+			"${Author.Name}", issue.Author.Name)
+		targetTitle = rpl.Replace(m.params.To.TargetIssuePrefix) + " " + issue.Title
 	}
 	for _, t := range tis {
 		if targetTitle == t.Title {
