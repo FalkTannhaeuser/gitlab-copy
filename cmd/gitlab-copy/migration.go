@@ -170,7 +170,7 @@ func (m *migration) migrateIssue(issueID int) error {
 	ni, resp, err := target.Issues.CreateIssue(tarProjectID, iopts)
 	if err != nil {
 		if resp != nil && resp.StatusCode == http.StatusRequestURITooLong {
-			fmt.Printf("target: catched a \"%s\" error, shortening issue's decription length ...\n", http.StatusText(resp.StatusCode))
+			fmt.Printf("target: caught a \"%s\" error, shortening issue's description length ...\n", http.StatusText(resp.StatusCode))
 			smalld := (*iopts.Description)[:1024]
 			iopts.Description = &smalld
 			ni, _, err = target.Issues.CreateIssue(tarProjectID, iopts)
